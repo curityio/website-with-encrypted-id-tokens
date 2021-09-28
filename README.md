@@ -47,5 +47,19 @@ This has a JWT header that provides details of the key used:
 
 ## Decrypting the Payload
 
-I will start by looking at [JOSE](https://github.com/cisco/node-jose) and see if I can get this working.\
-I have only a limited understanding of encryption algorithms and need to do some more reading.
+The [JOSE](https://github.com/cisco/node-jose) and similar libraries can do the decryption to a plain JWT:
+
+```javascript
+const encryptedIdToken = 'eyJraWQiOiItO ...';
+const options = {
+    keyManagementAlgorithms: ['RSA-OAEP'],
+    contentEncryptionAlgorithms: ['A256CBC-HS512'],
+} as DecryptOptions;
+const {plaintext: decryptedData, protectedHeader} = await compactDecrypt(jwe, privateKey, options);
+```
+
+This produces a normal JWT with its own header and payload:
+
+```text
+eyJraWQiOiItMzgwNzQ4MTIiLCJ4NXQiOiJNUi1wR1RhODY2UmRaTGpONlZ3cmZheTkwN2ciLCJhbGciOiJSUzI1NiJ9.eyJleHAiOjE2MzI4Mjg3MDIsIm5iZiI6MTYzMjgyNTEwMiwianRpIjoiZDRmMzExMjktZmVlNC00NzJlLThiY2EtYzMzODU5OWYwNmIwIiwiaXNzIjoiaHR0cHM6Ly9hNmQzNjNiODgzZmEuZXUubmdyb2suaW8vZGV2L29hdXRoL2Fub255bW91cyIsImF1ZCI6Imp3ZS1jbGllbnQiLCJzdWIiOiJkY2MxOTMwOWY0MTY0YWVhMWVkNTZlN2M2MWYzYmZiOTQ5ZDY3MjQ0OWYwOWUzMDI5ZTkzNzhkN2FiNjE1NGM0IiwiYXV0aF90aW1lIjoxNjMyODIyNzc1LCJpYXQiOjE2MzI4MjUxMDIsInB1cnBvc2UiOiJpZCIsImF0X2hhc2giOiJoU0pUN2ZqV0tuZjR5NDRCYzBjdG1nIiwiYWNyIjoidXJuOnNlOmN1cml0eTphdXRoZW50aWNhdGlvbjp1c2VybmFtZTp1c2VybmFtZSIsImRlbGVnYXRpb25faWQiOiIwYjkzMDU3MS1hNjQ1LTRmZmUtYjkzNy04M2Y4MmEyMTgxOWYiLCJzX2hhc2giOiJNcVRRMmlsSEp1RzVZTjJRS3g1MTZ3IiwiYXpwIjoiandlLWNsaWVudCIsImFtciI6InVybjpzZTpjdXJpdHk6YXV0aGVudGljYXRpb246dXNlcm5hbWU6dXNlcm5hbWUiLCJzaWQiOiJ1cGR6RjZIY215MTIzUGJDIn0.HEMsOaKzJ65OJyu-qC4WPsCoeUTVvwAfzNiw30QaXoZOtQSeQCOw8I11-9bexqgCPObh5MsbTS5UTpFAt-yU3v1mtC1Kd3Yuj7rhs4aRXR4WC-mxe3p7ZhIDJDhlsGAZV9iNk5DIJcwt4OGoyI1ESPjWCFOspKVhkuOIxcIiPA9RX7HiSx_EHIdOut_QhDgn-aARNaUEacI9v1S-TTTKmp_UrXe-nbuCmeL450HiEkZnsyqW3uyR3SRSVL70uIycjN5J8GkuKLJ5OdEYs9uYsoAXeWduwIALcFPUJFlhW1JP9JxFcRftuhsGb6Kd6frtDEx3-M9_9Y3jCpRxOXPHHA
+```

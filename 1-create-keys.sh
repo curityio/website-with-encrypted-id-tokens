@@ -92,3 +92,5 @@ openssl pkcs12 \
     -out $ENCRYPTION_CERT_FILE_PREFIX.p12 \
     -passout pass:$ENCRYPTION_PKCS12_PASSWORD
 echo '*** Successfully exported client encryption public and private key to a PKCS#12 file'
+
+
