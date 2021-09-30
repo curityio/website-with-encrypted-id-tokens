@@ -17,7 +17,7 @@ class CustomTokenResponseConverter : Converter<Map<String?, String?>?, OAuth2Acc
         val decryptedIdToken = JweDecryptor().decrypt(encryptedIdToken!!);
         val extraParams = mapOf("id_token" to decryptedIdToken)
 
-        // This boiler plate code is then needed
+        // We then need to resupply all standard parameters
         var scopes: Set<String?> = emptySet<String>()
         if (tokenResponseParameters.containsKey(OAuth2ParameterNames.SCOPE)) {
             val scope = tokenResponseParameters[OAuth2ParameterNames.SCOPE]
