@@ -4,9 +4,9 @@
 # A script to create a client encryption key pair as a P12 file
 ###############################################################
 
-rm -rf certs
-mkdir -p certs
-cd certs
+rm -rf keys
+mkdir -p keys
+cd keys
 set -e
 
 #
