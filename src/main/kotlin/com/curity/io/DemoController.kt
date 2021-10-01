@@ -36,19 +36,11 @@ class DemoController {
         @AuthenticationPrincipal oidcUser: OidcUser
     ): String {
 
+        val userName = (oidcUser == null) ?
+            
+        }
         model.addAttribute("userName",
             "${oidcUser.idToken.givenName} ${oidcUser.idToken.familyName}")
-        return "user"
-    }
-
-    @GetMapping("/logout")
-    fun logout(
-        model: Model,
-        @AuthenticationPrincipal oidcUser: OidcUser
-    ): String {
-
-        model.addAttribute("userName",
-            "${oidcUser.idToken.givenName} ${oidcUser.idToken.familyName}")
-        return "user"
+        return "index"
     }
 }

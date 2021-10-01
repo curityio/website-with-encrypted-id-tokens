@@ -17,6 +17,7 @@
 
 package com.curity.io
 
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.converter.FormHttpMessageConverter
@@ -26,13 +27,22 @@ import org.springframework.security.oauth2.client.endpoint.DefaultAuthorizationC
 import org.springframework.security.oauth2.client.endpoint.OAuth2AccessTokenResponseClient
 import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCodeGrantRequest
 import org.springframework.security.oauth2.client.http.OAuth2ErrorResponseErrorHandler
+import org.springframework.security.oauth2.client.oidc.web.logout.OidcClientInitiatedLogoutSuccessHandler
+import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository
 import org.springframework.security.oauth2.core.http.converter.OAuth2AccessTokenResponseHttpMessageConverter
 import org.springframework.web.client.RestTemplate
-import java.util.Arrays
+import java.util.Arrays;
+
 
 @Configuration
 class OAuth2SecurityConfig : WebSecurityConfigurerAdapter() {
-    
+
+    @Autowired
+    var clientRegistrationRepository: ClientRegistrationRepository? = null
+
+    /*
+     * Configure overall behavior
+     */
     override fun configure(http: HttpSecurity) {
 
         http.authorizeRequests()
@@ -40,11 +50,19 @@ class OAuth2SecurityConfig : WebSecurityConfigurerAdapter() {
             .antMatchers("/error").permitAll()
             .anyRequest().authenticated()
             .and()
+            .logout()
+                .logoutSuccessUrl("/")
+                //.invalidateHttpSession(true)
+                //.clearAuthentication(true)
+            .and()
             .oauth2Login()
-            .tokenEndpoint()
-                .accessTokenResponseClient(accessTokenResponseClient())
+                .tokenEndpoint()
+                    .accessTokenResponseClient(accessTokenResponseClient())
     }
 
+    /*
+     * Used to decrypt access tokens
+     */
     @Bean
     fun accessTokenResponseClient(): OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest?>? {
 
@@ -60,5 +78,14 @@ class OAuth2SecurityConfig : WebSecurityConfigurerAdapter() {
         restTemplate.errorHandler = OAuth2ErrorResponseErrorHandler()
         accessTokenResponseClient.setRestOperations(restTemplate)
         return accessTokenResponseClient
+    }
+
+    /*
+     * Used to manage logouts without an ID token
+     */
+    fun oidcLogoutSuccessHandler(): OidcClientInitiatedLogoutSuccessHandler? {
+        val successHandler = OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository)
+        successHandler.setPostLogoutRedirectUri("http://localhost:8080/")
+        return successHandler
     }
 }
