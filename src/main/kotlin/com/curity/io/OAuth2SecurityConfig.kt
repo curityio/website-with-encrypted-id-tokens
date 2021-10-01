@@ -84,7 +84,7 @@ class OAuth2SecurityConfig : WebSecurityConfigurerAdapter() {
     fun oidcLogoutSuccessHandler(): OidcClientInitiatedLogoutSuccessHandler? {
 
         val successHandler = OidcClientInitiatedLogoutSuccessHandler(clientRegistrationRepository)
-        successHandler.setPostLogoutRedirectUri("http://www.example.com:8080/")
+        successHandler.setPostLogoutRedirectUri("http://localhost:8080/")
         return successHandler
     }
 }
