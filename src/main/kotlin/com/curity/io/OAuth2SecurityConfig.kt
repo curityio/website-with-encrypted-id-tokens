@@ -12,7 +12,7 @@ import org.springframework.security.oauth2.client.endpoint.OAuth2AuthorizationCo
 import org.springframework.security.oauth2.client.http.OAuth2ErrorResponseErrorHandler
 import org.springframework.security.oauth2.core.http.converter.OAuth2AccessTokenResponseHttpMessageConverter
 import org.springframework.web.client.RestTemplate
-import java.util.*
+import java.util.Arrays
 
 @Configuration
 class OAuth2SecurityConfig : WebSecurityConfigurerAdapter() {
@@ -20,6 +20,8 @@ class OAuth2SecurityConfig : WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
 
         http.authorizeRequests()
+            .antMatchers("/").permitAll()
+            .antMatchers("/error").permitAll()
             .anyRequest().authenticated()
             .and()
             .oauth2Login()

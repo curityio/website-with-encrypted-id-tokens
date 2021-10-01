@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Spring Boot OIDC Demo - Login</title>
+    <title>Website with Encrypted ID Tokens</title>
     <meta charset="utf-8" />
 </head>
 <body>
 
-<h1>Your Login Details</h1>
+<h1>You authenticated successfully: <span style="font-weight:bold" th:text="${userName}"></span></h1>
 <div>
-    Welcome <span style="font-weight:bold" th:text="${userName}"></span>
+    <p>Click to <a href="/logout">logout and end your session</a></p>
 </div>
 </body>
 </html>
