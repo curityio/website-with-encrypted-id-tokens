@@ -11,4 +11,5 @@ spring:
             scope: openid, profile
         provider:
           idsvr:
-            issuer-uri: http://login.example.com:8443/dev/oauth/anonymous
+          #issuer-uri: https://localhost:8443/oauth/v2/oauth-anonymous
+          issuer-uri: http://login.example.com:8443/oauth/v2/oauth-anonymous

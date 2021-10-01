@@ -13,9 +13,10 @@ class CustomTokenResponseConverter : Converter<Map<String?, String?>?, OAuth2Acc
     override fun convert(tokenResponseParameters: Map<String?, String?>): OAuth2AccessTokenResponse {
 
         // Do some custom processing to decrypt the ID token
-        val encryptedIdToken = tokenResponseParameters["id_token"]
-        val decryptedIdToken = JweDecryptor().decrypt(encryptedIdToken!!);
-        val extraParams = mapOf("id_token" to decryptedIdToken)
+        var idToken = tokenResponseParameters["id_token"]
+        if (idToken != null) {
+            idToken = JweDecryptor().decrypt(idToken);
+        }
 
         // We then need to resupply all standard parameters
         var scopes: Set<String?> = emptySet<String>()
@@ -23,15 +24,16 @@ class CustomTokenResponseConverter : Converter<Map<String?, String?>?, OAuth2Acc
             val scope = tokenResponseParameters[OAuth2ParameterNames.SCOPE]
             scopes = Arrays.stream(StringUtils.delimitedListToStringArray(scope, " ")).collect(Collectors.toSet())
         }
-
         val accessToken = tokenResponseParameters[OAuth2ParameterNames.ACCESS_TOKEN]
         val refreshToken = tokenResponseParameters[OAuth2ParameterNames.REFRESH_TOKEN]
         val expiresIn = java.lang.Long.valueOf(tokenResponseParameters[OAuth2ParameterNames.EXPIRES_IN])
         val accessTokenType = OAuth2AccessToken.TokenType.BEARER
 
+        val extraParams = mapOf("id_token" to idToken)
         return OAuth2AccessTokenResponse
             .withToken(accessToken)
             .refreshToken(refreshToken)
+            .scopes(scopes)
             .tokenType(accessTokenType)
             .expiresIn(expiresIn)
             .additionalParameters(extraParams)

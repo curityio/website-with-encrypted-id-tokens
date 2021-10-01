@@ -19,7 +19,9 @@ class UserController {
         model: Model,
         @AuthenticationPrincipal oidcUser: OidcUser
     ): String {
-        model.addAttribute("userName", oidcUser.name)
+
+        model.addAttribute("userName",
+            "${oidcUser.idToken.givenName} ${oidcUser.idToken.familyName}")
         return "user"
     }
 }
