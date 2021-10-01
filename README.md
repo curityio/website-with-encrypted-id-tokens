@@ -4,8 +4,8 @@ A code example showing a method for protecting Personally Identifiable Informati
 
 ## Overview
 
-A website application developed in Kotlin encrypts ID tokens using JSON Web Encryption (JWE).\
-The [jose4j library](https://github.com/RbkGh/Jose4j) is used by the web client to perform decryption of the Nested JWT. 
+A Kotlin Spring Boot website application receives ID tokens that are encrypted using JSON Web Encryption (JWE).\
+The app then uses the [jose4j library](https://github.com/RbkGh/Jose4j) to perform decryption of a Nested JWT. 
 
 ## Create Encryption Keys
 
