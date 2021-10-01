@@ -29,7 +29,6 @@ class JweDecryptor {
     fun decrypt(encryptedJwt: String): String {
 
         val privateKey = loadPrivateKey()
-
         val jwe = JsonWebEncryption()
         jwe.key = privateKey
         jwe.compactSerialization = encryptedJwt

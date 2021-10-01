@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>User view</title>
+    <title>Website with Encrypted ID Tokens</title>
     <meta charset="utf-8" />
 </head>
 <body>
-<h1>User view</h1>
+    <h1>Welcome: <span style="font-weight:bold" th:text="${userName}"></span></h1>
+    <form method="post" th:action="@{/logout}">
+        <p>Click to <a href="/logout">logout and end your session</a></p>
+    </form>
 </body>
 </html>

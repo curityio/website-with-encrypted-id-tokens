@@ -20,6 +20,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.security.oauth2.core.oidc.user.OidcUser
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
+import org.springframework.util.StringUtils
 import org.springframework.web.bind.annotation.GetMapping
 
 @Controller
@@ -36,11 +37,8 @@ class DemoController {
         @AuthenticationPrincipal oidcUser: OidcUser
     ): String {
 
-        val userName = (oidcUser == null) ?
-            
-        }
-        model.addAttribute("userName",
-            "${oidcUser.idToken.givenName} ${oidcUser.idToken.familyName}")
-        return "index"
+        val userName = if (StringUtils.hasLength(oidcUser.name)) "${oidcUser.idToken.givenName} ${oidcUser.idToken.familyName}" else ""
+        model.addAttribute("userName", userName)
+        return "user"
     }
 }

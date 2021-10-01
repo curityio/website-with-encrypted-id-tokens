@@ -1,17 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <title>Website with Encrypted ID Tokens</title>
+    <meta charset="UTF-8">
 </head>
 <body>
-    <div th:if="${#authorization.expression('isAuthenticated()')}">
-        <h1>Welcome: <span style="font-weight:bold" th:text="${userName}"></span></h1>
-        <p>Click to <a href="/logout">logout and end your session</a></p>
-    </div>
-    <div>
-        <h1>You are not logged in</h1>
-        <p>Click here to <a href="/user">begin a login via the Curity Identity Server</a></p>
-    </div>
+    <h1>Welcome</h1>
+    <p>Click here to <a href="/user">begin a login via the Curity Identity Server</a></p>
 </body>
 </html>
