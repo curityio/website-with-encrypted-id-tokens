@@ -1,0 +1,14 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          idsvr:
+            client-id: website-client
+            client-secret: Password1
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/curity"
+            scope: openid, profile
+        provider:
+          idsvr:
+            issuer-uri: http://localhost:8443/oauth/v2/oauth-anonymous
