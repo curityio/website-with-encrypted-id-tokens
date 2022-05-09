@@ -4,9 +4,9 @@
 # A simple OpenSSL script to create self signed client encryption public and private keys
 #########################################################################################
 
-rm -rf keys2
-mkdir -p keys2
-cd keys2
+rm -rf keys
+mkdir -p keys
+cd keys
 set -e
 
 #
