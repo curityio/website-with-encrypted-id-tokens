@@ -15,10 +15,6 @@ Run a script that uses OpenSSL to create some development encryption keys:
 ./create-keys.sh
 ```
 
-## Configure the Curity Identity Server
-
-Follow the [Code Example Article](https://curity.io/resources/learn/website-using-encrypted-id-tokens) instructions to configure your instance of the Curity Identity Server.  
-
 ## Build the Website
 
 Ensure that Java 8 or later is installed, along with Maven, then build and run the app:
@@ -33,6 +29,7 @@ java -jar target/example-website-0.0.1-SNAPSHOT.jar
 Browse to http://localhost:8080 to sign a user in.\
 The app will then decrypt ID tokens and the UI will render user name claims.
 
-## More Information
+## Further Information
 
-Please visit [curity.io](https://curity.io/) for more information about the Curity Identity Server.
+- See the [Website Tutorial](https://curity.io/resources/learn/website-using-encrypted-id-tokens) for further information on the setup.
+- Please visit [curity.io](https://curity.io/) for more information about the Curity Identity Server.
