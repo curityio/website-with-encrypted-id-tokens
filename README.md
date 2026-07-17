@@ -1,5 +1,8 @@
 # Website with Encrypted ID Tokens
 
+[![Quality](https://img.shields.io/badge/quality-demo-red)](https://curity.io/resources/code-examples/status/)
+[![Availability](https://img.shields.io/badge/availability-source-blue)](https://curity.io/resources/code-examples/status/)
+
 A code example showing a method for protecting Personally Identifiable Information (PII) in ID tokens.
 
 ## Overview
